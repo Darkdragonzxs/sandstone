@@ -60,6 +60,16 @@
       </p>
     </div>
     <script id="customizable-js">
+    window.SANDSTONE_CUSTOM = window.SANDSTONE_CUSTOM || {};
+    (function applyQueryUrlMode() {
+      const params = new URLSearchParams(window.location.search);
+      const queryUrl = params.get("url");
+
+      if (!queryUrl) return;
+
+      document.body.classList.add("fullscreen-mode");
+      window.location.hash = queryUrl;
+    })();
     window.SANDSTONE_CUSTOM = { homepageTitle: "sandstone" };
     window.SANDSTONE_CUSTOM = window.SANDSTONE_CUSTOM || {};
     </script>
