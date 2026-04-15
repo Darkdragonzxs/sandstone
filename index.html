@@ -18,6 +18,16 @@
       * {
         color: var(--custom-text-color);
       }
+
+      body.fullscreen-mode #address_bar,
+      body.fullscreen-mode #options_div {
+        display: none !important;
+      }
+
+      body.fullscreen-mode #frame_container {
+        height: 100vh;
+      }
+
     </style>
   </head>
   <body>
@@ -60,18 +70,60 @@
       </p>
     </div>
     <script id="customizable-js">
+    window.SANDSTONE_CUSTOM = { homepageTitle: "zodiac" };
     window.SANDSTONE_CUSTOM = window.SANDSTONE_CUSTOM || {};
-    (function applyQueryUrlMode() {
+    window.SANDSTONE_CUSTOM.defaultWispServer = "wss://zodiac.icu/wisp/";
+
+    (function applyQueryUrlModeAndWispConfig() {
       const params = new URLSearchParams(window.location.search);
       const queryUrl = params.get("url");
+      const WISP_STORAGE_KEY = "sandstone:wisp-server";
+      const defaultWispServer = window.SANDSTONE_CUSTOM.defaultWispServer;
 
-      if (!queryUrl) return;
+      if (queryUrl) {
+        document.body.classList.add("fullscreen-mode");
+        window.location.hash = queryUrl;
+      }
 
-      document.body.classList.add("fullscreen-mode");
-      window.location.hash = queryUrl;
+      const applyWispServer = (serverUrl) => {
+        if (!serverUrl) return;
+        if (window.sandstone?.network?.set_websocket) {
+          window.sandstone.network.set_websocket(serverUrl);
+        }
+        const wispInput = document.getElementById("wisp_url_input");
+        if (wispInput) {
+          wispInput.value = serverUrl;
+        }
+      };
+
+      const persistAndApplyWispServer = (serverUrl) => {
+        const trimmed = (serverUrl || "").trim();
+        if (!trimmed) return;
+        localStorage.setItem(WISP_STORAGE_KEY, trimmed);
+        applyWispServer(trimmed);
+      };
+
+      const initializeWispServer = () => {
+        const saved = localStorage.getItem(WISP_STORAGE_KEY);
+        const activeServer = saved || defaultWispServer;
+        applyWispServer(activeServer);
+      };
+
+      const waitForMainRuntime = setInterval(() => {
+        const ready =
+          !!window.sandstone?.network?.set_websocket &&
+          !!document.getElementById("wisp_url_input");
+        if (!ready) return;
+
+        clearInterval(waitForMainRuntime);
+        initializeWispServer();
+
+        const wispInput = document.getElementById("wisp_url_input");
+        const onUserWispChange = () => persistAndApplyWispServer(wispInput.value);
+        wispInput.addEventListener("change", onUserWispChange);
+        wispInput.addEventListener("blur", onUserWispChange);
+      }, 25);
     })();
-    window.SANDSTONE_CUSTOM = { homepageTitle: "sandstone" };
-    window.SANDSTONE_CUSTOM = window.SANDSTONE_CUSTOM || {};
     </script>
     <script src="main.js"></script>
   </body>
