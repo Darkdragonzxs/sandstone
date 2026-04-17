@@ -41,9 +41,9 @@ a:active {
 
 #address_bar {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
   z-index: 50;
 
   display: grid;
@@ -51,13 +51,15 @@ a:active {
   align-items: center;
   column-gap: 10px;
 
-  width: auto;
+  width: min(920px, calc(100% - 24px));
   max-width: 980px;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  padding: 8px 10px;
+
+  border-radius: 18px;
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid #2c2c2c;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 #favicon_container {
