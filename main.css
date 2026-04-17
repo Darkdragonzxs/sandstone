@@ -40,10 +40,7 @@ a:active {
 }
 
 #address_bar {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
+  position: relative;
   z-index: 50;
 
   display: grid;
@@ -51,11 +48,10 @@ a:active {
   align-items: center;
   column-gap: 10px;
 
-  width: auto;
-  max-width: 980px;
-  padding: 0;
+  width: 100%;
+  padding: 8px 10px;
   border-radius: 0;
-  background: transparent;
+  background: var(--bg-top);
   border: none;
   box-shadow: none;
 }
@@ -65,7 +61,7 @@ a:active {
   height: 46px;
   border-radius: 999px;
   overflow: hidden;
-  background: #1e1e1e;
+  background: var(--bg-surface);
   border: none;
   display: flex;
   align-items: center;
@@ -82,7 +78,7 @@ a:active {
   width: 100%;
   min-height: 46px;
   padding: 0 16px;
-  border-radius: 14px;
+  border-radius: 10px;
   border: none;
   outline: none;
   background: #2a2a2a;
@@ -92,7 +88,7 @@ a:active {
 }
 
 #url_box:focus {
-  background: #313131;
+  background: var(--bg-input-focus);
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.14);
 }
 
@@ -100,9 +96,9 @@ button {
   min-height: 40px;
   min-width: 40px;
   padding: 0 10px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: none;
-  background: #202020;
+  background: var(--bg-panel);
   color: var(--text-primary);
   font-size: 14px;
   font-weight: 600;
@@ -117,7 +113,7 @@ button i {
 }
 
 button:hover {
-  background: #2b2b2b;
+  background: var(--bg-panel-hover);
 }
 
 #navigate_button {
@@ -129,10 +125,10 @@ button:hover {
 }
 
 #frame_container {
-  position: absolute;
-  inset: 0;
+  flex-grow: 1;
+  min-height: 0;
   background: #0f0f0f;
-  padding: 0;
+  padding-bottom: 0;
 }
 
 #frame_container iframe {
