@@ -134,6 +134,29 @@
         }, 25);
       })();
     </script>
+<script>
+  (function () {
+    const originalGet = document.getElementById.bind(document);
+
+    document.getElementById = function (id) {
+      const el = originalGet(id);
+
+      if (el) return el;
+
+      return {
+        textContent: "",
+        value: "",
+        innerHTML: "",
+        style: {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        setAttribute: () => {},
+        getAttribute: () => null,
+        appendChild: () => {},
+      };
+    };
+  })();
+</script>
 
     <script src="https://cdn.jsdelivr.net/gh/Darkdragonzxs/sandstone@latest/main.js"></script>
 
