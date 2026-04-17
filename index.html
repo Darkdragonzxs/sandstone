@@ -143,21 +143,14 @@
 
       if (el) return el;
 
-      return {
-        textContent: "",
-        value: "",
-        innerHTML: "",
-        style: {},
-        addEventListener: () => {},
-        removeEventListener: () => {},
-        setAttribute: () => {},
-        getAttribute: () => null,
-        appendChild: () => {},
-      };
+      if (id === "version_text") {
+        return { textContent: "" };
+      }
+
+      return null;
     };
   })();
 </script>
-
     <script src="https://cdn.jsdelivr.net/gh/Darkdragonzxs/sandstone@latest/main.js"></script>
 
     <script>
