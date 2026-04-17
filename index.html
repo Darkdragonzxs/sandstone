@@ -3,6 +3,7 @@
   <head>
     <title>zodiac</title>
     <link rel="icon" type="image/png" href="https://www.google.com/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8TBT7GxR4jP0MZc7VY4x0V4Qk+N4Gg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="main.css">
     <style id="customizable-css">
       :root {
@@ -36,8 +37,12 @@
         <img id="favicon_img" width="24px" height="24px">
       </div>
       <input id="url_box" type="text" placeholder="Enter URL here..." value="sandstone://home">
-      <button id="navigate_button">Submit</button>
-      <button id="options_button">Options</button>
+      <button id="navigate_button" aria-label="Send">
+        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+      </button>
+      <button id="options_button" aria-label="Settings">
+        <i class="fa-solid fa-gear" aria-hidden="true"></i>
+      </button>
     </div>
     <div id="frame_container"></div>
 
