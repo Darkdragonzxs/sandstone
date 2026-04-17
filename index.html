@@ -135,21 +135,14 @@
       })();
     </script>
 <script>
-  (function () {
-    const originalGet = document.getElementById.bind(document);
-
-    document.getElementById = function (id) {
-      const el = originalGet(id);
-
-      if (el) return el;
-
-      if (id === "version_text") {
-        return { textContent: "" };
-      }
-
-      return null;
-    };
-  })();
+  window.addEventListener("DOMContentLoaded", () => {
+    if (!document.getElementById("version_text")) {
+      const dummy = document.createElement("span");
+      dummy.id = "version_text";
+      dummy.style.display = "none";
+      document.body.appendChild(dummy);
+    }
+  });
 </script>
     <script src="https://cdn.jsdelivr.net/gh/Darkdragonzxs/sandstone@latest/main.js"></script>
 
