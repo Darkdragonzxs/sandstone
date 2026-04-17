@@ -25,8 +25,6 @@ body {
 
 body {
   margin: 0;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
   background: var(--bg-root);
   color: var(--text-primary);
@@ -68,7 +66,7 @@ a:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 #favicon_img {
@@ -83,7 +81,7 @@ a:active {
   border-radius: 10px;
   border: none;
   outline: none;
-  background: var(--bg-input);
+  background: #2a2a2a;
   color: var(--text-primary);
   font-size: 15px;
   transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
@@ -141,7 +139,7 @@ button:hover {
 
 #options_div {
   position: absolute;
-  top: auto;
+  top: 66px;
   right: 14px;
   left: auto;
   transform: none;
@@ -153,8 +151,8 @@ button:hover {
 
   width: min(360px, calc(100% - 32px));
   min-height: 260px;
-  bottom: 88px;
-  max-height: calc(100vh - 188px);
+  bottom: auto;
+  max-height: calc(100vh - 84px);
   padding: 16px;
 
   border-radius: 12px;
