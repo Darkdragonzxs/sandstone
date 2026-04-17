@@ -2,9 +2,11 @@
 <html lang="en">
   <head>
     <title>zodiac</title>
+
     <link rel="icon" type="image/png" href="https://www.google.com/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8TBT7GxR4jP0MZc7VY4x0V4Qk+N4Gg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Darkdragonzxs/sandstone@main/main.js">
+
     <style id="customizable-css">
       :root {
         --custom-bg-color: #222222;
@@ -27,106 +29,124 @@
       body.fullscreen-mode #frame_container {
         height: 100vh;
       }
-
     </style>
   </head>
+
   <body>
     <div id="address_bar">
       <div id="favicon_container">
         <p id="favicon_text" style="display: none;">...</p>
-        <img id="favicon_img" width="24px" height="24px">
+        <img id="favicon_img">
       </div>
+
       <input id="url_box" type="text" placeholder="Enter URL here..." value="sandstone://home">
-      <button id="navigate_button" aria-label="Send">
-        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+
+      <button id="navigate_button">
+        <i class="fa-solid fa-paper-plane"></i>
       </button>
-      <button id="options_button" aria-label="Settings">
-        <i class="fa-solid fa-gear" aria-hidden="true"></i>
+
+      <button id="options_button">
+        <i class="fa-solid fa-gear"></i>
       </button>
     </div>
+
     <div id="frame_container"></div>
 
     <div id="options_div" style="display: none;">
-      <div style="display: flex;">
-        <h2 style="margin: 0px;">Options:</h2>
+      
+      <div style="display: flex; align-items: center;">
+        <h2 style="margin: 0;">Options</h2>
         <div style="flex-grow: 1"></div>
-        <button id="close_options_button">X</button>
+        <button id="close_options_button">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      
-      <div style="display: flex; gap: 8px;">
-        <label for="wisp_url_input">Wisp URL:</label>
-        <input id="wisp_url_input" type="text" style="flex-grow: 1">
+
+      <div id="wisp_row">
+        <span>Wisp URL:</span>
+        <input id="wisp_url_input" type="text" placeholder="wss://..." />
       </div>
-      
-      <div style="display: flex; gap: 8px;">
-        <p style="font-size: 16px;">Eval JS:</p>
+
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <p>Eval JS</p>
         <div style="flex-grow: 1"></div>
         <button id="eval_js_button">Run</button>
       </div>
-      
-      <textarea id="eval_js_input"></textarea>
+
+      <textarea id="eval_js_input" placeholder="type js here..."></textarea>
 
       <div style="flex-grow: 1"></div>
-          <i>zodiac <span id="version_text"></span></i>
-        </a>
-      </p>
     </div>
+
     <script id="customizable-js">
-    window.SANDSTONE_CUSTOM = { homepageTitle: "zodiac" };
-    window.SANDSTONE_CUSTOM = window.SANDSTONE_CUSTOM || {};
-    window.SANDSTONE_CUSTOM.defaultWispServer = "wss://zodiac.icu/wisp/";
+      window.SANDSTONE_CUSTOM = { homepageTitle: "zodiac" };
+      window.SANDSTONE_CUSTOM = window.SANDSTONE_CUSTOM || {};
+      window.SANDSTONE_CUSTOM.defaultWispServer = "wss://zodiac.icu/wisp/";
 
-    (function applyQueryUrlModeAndWispConfig() {
-      const params = new URLSearchParams(window.location.search);
-      const queryUrl = params.get("url");
-      const WISP_STORAGE_KEY = "sandstone:wisp-server";
-      const defaultWispServer = window.SANDSTONE_CUSTOM.defaultWispServer;
+      (function applyQueryUrlModeAndWispConfig() {
+        const params = new URLSearchParams(window.location.search);
+        const queryUrl = params.get("url");
+        const WISP_STORAGE_KEY = "sandstone:wisp-server";
+        const defaultWispServer = window.SANDSTONE_CUSTOM.defaultWispServer;
 
-      if (queryUrl) {
-        document.body.classList.add("fullscreen-mode");
-        window.location.hash = queryUrl;
-      }
-
-      const applyWispServer = (serverUrl) => {
-        if (!serverUrl) return;
-        if (window.sandstone?.network?.set_websocket) {
-          window.sandstone.network.set_websocket(serverUrl);
+        if (queryUrl) {
+          document.body.classList.add("fullscreen-mode");
+          window.location.hash = queryUrl;
         }
-        const wispInput = document.getElementById("wisp_url_input");
-        if (wispInput) {
-          wispInput.value = serverUrl;
-        }
-      };
 
-      const persistAndApplyWispServer = (serverUrl) => {
-        const trimmed = (serverUrl || "").trim();
-        if (!trimmed) return;
-        localStorage.setItem(WISP_STORAGE_KEY, trimmed);
-        applyWispServer(trimmed);
-      };
+        const applyWispServer = (serverUrl) => {
+          if (!serverUrl) return;
+          if (window.sandstone?.network?.set_websocket) {
+            window.sandstone.network.set_websocket(serverUrl);
+          }
+          const wispInput = document.getElementById("wisp_url_input");
+          if (wispInput) {
+            wispInput.value = serverUrl;
+          }
+        };
 
-      const initializeWispServer = () => {
-        const saved = localStorage.getItem(WISP_STORAGE_KEY);
-        const activeServer = saved || defaultWispServer;
-        applyWispServer(activeServer);
-      };
+        const persistAndApplyWispServer = (serverUrl) => {
+          const trimmed = (serverUrl || "").trim();
+          if (!trimmed) return;
+          localStorage.setItem(WISP_STORAGE_KEY, trimmed);
+          applyWispServer(trimmed);
+        };
 
-      const waitForMainRuntime = setInterval(() => {
-        const ready =
-          !!window.sandstone?.network?.set_websocket &&
-          !!document.getElementById("wisp_url_input");
-        if (!ready) return;
+        const initializeWispServer = () => {
+          const saved = localStorage.getItem(WISP_STORAGE_KEY);
+          const activeServer = saved || defaultWispServer;
+          applyWispServer(activeServer);
+        };
 
-        clearInterval(waitForMainRuntime);
-        initializeWispServer();
+        const waitForMainRuntime = setInterval(() => {
+          const ready =
+            !!window.sandstone?.network?.set_websocket &&
+            !!document.getElementById("wisp_url_input");
+          if (!ready) return;
 
-        const wispInput = document.getElementById("wisp_url_input");
-        const onUserWispChange = () => persistAndApplyWispServer(wispInput.value);
-        wispInput.addEventListener("change", onUserWispChange);
-        wispInput.addEventListener("blur", onUserWispChange);
-      }, 25);
-    })();
+          clearInterval(waitForMainRuntime);
+          initializeWispServer();
+
+          const wispInput = document.getElementById("wisp_url_input");
+          const onUserWispChange = () => persistAndApplyWispServer(wispInput.value);
+          wispInput.addEventListener("change", onUserWispChange);
+          wispInput.addEventListener("blur", onUserWispChange);
+        }, 25);
+      })();
     </script>
-    <script src="main.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/Darkdragonzxs/sandstone@main/main.js"></script>
+
+    <script>
+      document.getElementById("wisp_row").addEventListener("click", () => {
+        document.getElementById("wisp_url_input").focus();
+      });
+
+      document.getElementById("options_div").addEventListener("click", (e) => {
+        if (!e.target.closest("button") && !e.target.closest("input")) {
+          document.getElementById("eval_js_input").focus();
+        }
+      });
+    </script>
   </body>
 </html>
