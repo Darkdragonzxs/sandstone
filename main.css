@@ -39,6 +39,9 @@ a:active {
   text-decoration: none;
 }
 
+/* =========================
+   Address bar (bottom center)
+   ========================= */
 #address_bar {
   position: absolute;
   left: 50%;
@@ -62,17 +65,16 @@ a:active {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
+/* favicon */
 #favicon_container {
   width: 46px;
   height: 46px;
   border-radius: 999px;
   overflow: hidden;
   background: #1e1e1e;
-  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 #favicon_img {
@@ -80,24 +82,33 @@ a:active {
   height: 28px;
 }
 
+/* =========================
+   URL input (invisible style)
+   ========================= */
 #url_box {
   width: 100%;
   min-height: 46px;
-  padding: 0 16px;
-  border-radius: 14px;
+
   border: none;
   outline: none;
-  background: #2a2a2a;
+  background: transparent;
+
   color: var(--text-primary);
   font-size: 15px;
-  transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+  font-family: inherit;
+
+  padding: 0;
+  margin: 0;
 }
 
 #url_box:focus {
-  background: #313131;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.14);
+  outline: none;
+  box-shadow: none;
 }
 
+/* =========================
+   Buttons
+   ========================= */
 button {
   min-height: 40px;
   min-width: 40px;
@@ -108,18 +119,23 @@ button {
   color: var(--text-primary);
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.01em;
   cursor: pointer;
-  transition: background-color 120ms ease, border-color 120ms ease;
-}
 
-button i {
-  font-size: 14px;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background 120ms ease;
 }
 
 button:hover {
   background: #2b2b2b;
+}
+
+button i {
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
 }
 
 #navigate_button {
@@ -130,11 +146,13 @@ button:hover {
   background: var(--bg-panel-hover);
 }
 
+/* =========================
+   Frame
+   ========================= */
 #frame_container {
   position: absolute;
   inset: 0;
   background: #0f0f0f;
-  padding: 0;
 }
 
 #frame_container iframe {
@@ -143,12 +161,13 @@ button:hover {
   border: none;
 }
 
+/* =========================
+   Settings panel (fade in)
+   ========================= */
 #options_div {
   position: absolute;
   top: 66px;
   right: 14px;
-  left: auto;
-  transform: none;
   z-index: 40;
 
   display: flex;
@@ -157,7 +176,6 @@ button:hover {
 
   width: min(360px, calc(100% - 32px));
   min-height: 260px;
-  bottom: auto;
   max-height: calc(100vh - 84px);
   padding: 16px;
 
@@ -165,6 +183,24 @@ button:hover {
   background: #252a31;
   border: 1px solid #343c49;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+
+  /* animation */
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeInPanel 180ms ease forwards;
+
+  cursor: text;
+}
+
+@keyframes fadeInPanel {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 #options_div * {
@@ -177,11 +213,34 @@ button:hover {
   color: var(--text-primary);
 }
 
+/* =========================
+   Invisible textarea (Wisp / JS input)
+   ========================= */
 #eval_js_input {
   width: 100%;
   height: 122px;
   resize: none;
-  border-radius: 10px;
-  border: 1px solid #3c4555;
-  padding: 10px;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+
+  padding: 0;
+  margin: 0;
+}
+
+#eval_js_input:focus {
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+#eval_js_input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
 }
